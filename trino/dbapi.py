@@ -134,6 +134,7 @@ class Connection:
         self,
         host: str,
         port=constants.DEFAULT_PORT,
+        http_prefix: str = "",
         user=None,
         source=constants.DEFAULT_SOURCE,
         catalog=constants.DEFAULT_CATALOG,
@@ -158,6 +159,7 @@ class Connection:
         parsed_host = urlparse(host, allow_fragments=False)
 
         self.host = host if parsed_host.hostname is None else parsed_host.hostname + parsed_host.path
+        self.http_prefix = http_prefix
         self.port = port if parsed_host.port is None else parsed_host.port
         self.user = user
         self.source = source
@@ -244,6 +246,7 @@ class Connection:
             self._client_session,
             self._http_session,
             self.http_scheme,
+            self.http_prefix,
             self.auth,
             self.max_attempts,
             self.request_timeout,
